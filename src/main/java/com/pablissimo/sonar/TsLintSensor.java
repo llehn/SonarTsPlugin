@@ -53,6 +53,12 @@ public class TsLintSensor implements Sensor {
 	private boolean hasFilesToAnalyze() {
 		return fileSystem.files(this.filePredicates.hasLanguage(TypeScriptLanguage.LANGUAGE_EXTENSION)).iterator().hasNext();
 	}
+	
+    private boolean shouldFixLineOffests() {
+        // Typescript 1.3 produces wrong line mapping
+	    return settings.getBoolean(TypeScriptPlugin.SETTING_TS1_3_LINEOFFS_FIX);
+	}
+
 
 	public void analyse(Project project, SensorContext context) {
 		TsLintExecutor executor = this.getTsLintExecutor();
@@ -90,7 +96,7 @@ public class TsLintSensor implements Sensor {
 					(
 						issuable
 							.newIssueBuilder()
-							.line(issue.getStartPosition().getLine() + 1)
+							.line(issue.getStartPosition().getLine() + (shouldFixLineOffests() ? 0 : 1))
 							.message(issue.getFailure())
 							.ruleKey(RuleKey.of(TsRulesDefinition.REPOSITORY_NAME, issue.getRuleName()))
 							.build()
