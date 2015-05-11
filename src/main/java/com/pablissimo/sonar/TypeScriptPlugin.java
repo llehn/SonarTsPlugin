@@ -42,6 +42,15 @@ import org.sonar.api.SonarPlugin;
 		description = "Force coverage to be set to 0 when no report is provided.",
 		project = true,
 		global = false
+	),
+	@Property(
+		key = TypeScriptPlugin.SETTING_TS1_3_LINEOFFS_FIX,
+		defaultValue = "false",
+		type = PropertyType.BOOLEAN,
+		name = "Fixes the Typescript 1.3 line offset bug",
+		description = "Fixes the Typescript 1.3 line offset bug.",
+		project = true,
+		global = false
 	)
 	})
 public class TypeScriptPlugin extends SonarPlugin {
@@ -49,6 +58,7 @@ public class TypeScriptPlugin extends SonarPlugin {
 	public static final String SETTING_FORCE_ZERO_COVERAGE = "sonar.ts.forceZeroCoverage";
 	public static final String SETTING_TS_LINT_PATH = "sonar.ts.tslintpath";
 	public static final String SETTING_LCOV_REPORT_PATH = "sonar.ts.lcov.reportpath";
+	public static final String SETTING_TS1_3_LINEOFFS_FIX = "sonar.ts.ts13offsetfix";
 	
 	public List getExtensions() {
 		return Arrays.asList
